@@ -1,0 +1,57 @@
+/* Right-aligned filter with stable layout */
+.type-filter-wrapper {
+    width: 200px;
+    height: 45px;
+    margin-left: auto; /* Pushes to the right */
+    position: relative;
+  }
+  
+  .type-select {
+    width: 100%;
+    height: 100%;
+    padding: 0 1rem;
+    padding-right: 2rem;
+    border: 2px solid #3d7dca;
+    border-radius: 25px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 500;
+    background-color: white;
+    color: #333;
+    cursor: pointer;
+    appearance: none;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%233d7dca'%3e%3cpath d='M7 10l5 5 5-5z'/%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 1rem center;
+    background-size: 1rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    transition: all 0.2s ease;
+    outline: none;
+  }
+  
+  .type-select:hover {
+    border-color: #2a6bb7;
+  }
+  
+  .type-select:focus {
+    border-color: #ffcb05;
+    box-shadow: 0 0 0 3px rgba(61, 125, 202, 0.2);
+  }
+  
+  .type-option {
+    padding: 0.5rem;
+    background-color: white;
+    color: #333;
+    font-size: 0.9rem;
+  }
+  
+  .type-option[value="all"] {
+    font-weight: 600;
+    color: #3d7dca;
+  }
+  
+  /* Type colors */
+  .type-option[value="fire"] { color: #F08030; }
+  .type-option[value="water"] { color: #6890F0; }
+  .type-option[value="grass"] { color: #78C850; }
+  /* Add other types as needed */

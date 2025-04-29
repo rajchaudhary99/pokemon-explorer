@@ -1,0 +1,198 @@
+/* Loading Screen Container */
+.pokemon-loading-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10000;
+    overflow: hidden;
+    font-family: 'Poppins', sans-serif;
+  }
+  
+  .loading-background {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #3d7dca 0%, #003a70 100%);
+    opacity: 0.95;
+  }
+  
+  .loading-content {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+    text-align: center;
+    max-width: 400px;
+    padding: 2rem;
+    border-radius: 20px;
+  }
+  
+  /* Pokéball Animation */
+  .pokeball-animation {
+    position: relative;
+    width: 120px;
+    height: 120px;
+  }
+  
+  .pokeball {
+    width: 100px;
+    height: 100px;
+    position: relative;
+    margin: 10px;
+    animation: bounce 1.5s ease-in-out infinite;
+  }
+  
+  .pokeball-top {
+    position: absolute;
+    width: 100px;
+    height: 50px;
+    background-color: #ff1a1a;
+    border-radius: 50px 50px 0 0;
+    border-bottom: 5px solid #2e2e2e;
+  }
+  
+  .pokeball-bottom {
+    position: absolute;
+    bottom: 0;
+    width: 100px;
+    height: 50px;
+    background-color: white;
+    border-radius: 0 0 50px 50px;
+    border-top: 5px solid #2e2e2e;
+  }
+  
+  .pokeball-center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 30px;
+    height: 30px;
+    background-color: white;
+    border: 5px solid #2e2e2e;
+    border-radius: 50%;
+    z-index: 2;
+  }
+  
+  .pokeball-center::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 10px;
+    height: 10px;
+    background-color: #2e2e2e;
+    border-radius: 50%;
+  }
+  
+  /* Rotating Elements */
+  .rotating-elements {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+  
+  .pokemon-element {
+    position: absolute;
+    font-size: 24px;
+    animation-duration: 3s;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+    filter: drop-shadow(0 0 4px rgba(0, 0, 0, 0.3));
+  }
+  
+  .fire-spin {
+    color: #F08030;
+    top: -15px;
+    left: 50%;
+    transform: translateX(-50%);
+    animation-name: orbit-fire;
+  }
+  
+  .water-spin {
+    color: #6890F0;
+    bottom: -15px;
+    left: 50%;
+    transform: translateX(-50%);
+    animation-name: orbit-water;
+  }
+  
+  .grass-spin {
+    color: #78C850;
+    top: 50%;
+    right: -15px;
+    transform: translateY(-50%);
+    animation-name: orbit-grass;
+  }
+  
+  /* Loading Text */
+  .loading-text {
+    color: white;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  }
+  
+  .loading-text h3 {
+    font-size: 1.8rem;
+    margin-bottom: 0.5rem;
+    font-weight: 700;
+  }
+  
+  .loading-text p {
+    font-size: 1.1rem;
+    opacity: 0.9;
+    margin-bottom: 1.5rem;
+  }
+  
+  /* Progress Bar */
+  .progress-bar {
+    width: 300px;
+    height: 6px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 3px;
+    overflow: hidden;
+  }
+  
+  .progress-fill {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, #ffcb05, #ffde59);
+    border-radius: 3px;
+    animation: progress 2s ease-in-out infinite;
+  }
+  
+  /* Animations */
+  @keyframes bounce {
+    0%, 100% { transform: translateY(0) scale(1); }
+    50% { transform: translateY(-20px) scale(1.05); }
+  }
+  
+  @keyframes orbit-fire {
+    0% { transform: translateX(-50%) rotate(0deg) translateY(40px) rotate(0deg); }
+    100% { transform: translateX(-50%) rotate(360deg) translateY(40px) rotate(-360deg); }
+  }
+  
+  @keyframes orbit-water {
+    0% { transform: translateX(-50%) rotate(120deg) translateY(40px) rotate(-120deg); }
+    100% { transform: translateX(-50%) rotate(480deg) translateY(40px) rotate(-480deg); }
+  }
+  
+  @keyframes orbit-grass {
+    0% { transform: translateY(-50%) rotate(240deg) translateY(40px) rotate(-240deg); }
+    100% { transform: translateY(-50%) rotate(600deg) translateY(40px) rotate(-600deg); }
+  }
+  
+  @keyframes progress {
+    0% { width: 0%; left: 0; }
+    50% { width: 100%; left: 0; }
+    100% { width: 0%; left: 100%; }
+  }
