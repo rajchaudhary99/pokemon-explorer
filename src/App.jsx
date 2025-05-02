@@ -157,6 +157,7 @@ const PokemonDetailPage = ({ favorites, onToggleFavorite }) => {
         evolutions.push({
           id: pokemonId,
           name: currentChain.species.name,
+          min_level: currentChain.evolution_details[0]?.min_level || null
         });
       }
       currentChain.evolves_to.forEach(processChain);
@@ -314,7 +315,7 @@ const PokemonDetailPage = ({ favorites, onToggleFavorite }) => {
                   whileHover={{ scale: 1.05 }}
                 >
                   {ability.ability.name.replace('-', ' ')}
-                  {ability.is_hidden}
+                  
                 </motion.span>
               ))}
             </div>
@@ -348,42 +349,48 @@ const PokemonDetailPage = ({ favorites, onToggleFavorite }) => {
             >
               <h3>Evolution Chain</h3>
               <div className="evolution-chain">
-                <AnimatePresence>
-                  {evolutionChain.map((evo, index) => (
-                    <React.Fragment key={evo.id}>
-                      <motion.div 
-                        className="evolution-item"
+                {evolutionChain.map((evo, index) => (
+                  <React.Fragment key={evo.id}>
+                    <motion.div 
+                      className="evolution-stage"
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.1 + index * 0.15 }}
+                    >
+                      <div 
+                        className="evolution-card"
                         onClick={() => navigate(`/pokemon/${evo.id}`)}
-                        whileHover={{ y: -5 }}
-                        whileTap={{ scale: 0.95 }}
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        transition={{ delay: 0.45 + index * 0.1 }}
                       >
-                        <div className="evolution-image-container">
+                        <div className="evolution-image">
                           <img 
                             src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${evo.id}.png`} 
                             alt={evo.name} 
-                            onError={(e) => {
-                              e.target.src = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${evo.id}.png`;
-                            }}
                           />
                         </div>
-                        <span className="evolution-name">{evo.name}</span>
+                        <div className="evolution-info">
+                          <span className="pokemon-name">{evo.name}</span>
+                          <span className="pokemon-id">#{evo.id.toString().padStart(3, '0')}</span>
+                          {evo.min_level && (
+                            <div className="level-requirement">
+                              <span>Lv. {evo.min_level}+</span>
+                            </div>
+                          )}
+                        </div>
+                      </div>
+                    </motion.div>
+                    {index < evolutionChain.length - 1 && (
+                      <motion.div 
+                        className="evolution-connector"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        transition={{ delay: 0.2 + index * 0.15 }}
+                      >
+                        <div className="connector-line"></div>
+                        <div className="connector-arrow"></div>
                       </motion.div>
-                      {index < evolutionChain.length - 1 && (
-                        <motion.span 
-                          className="evolution-arrow"
-                          initial={{ opacity: 0 }}
-                          animate={{ opacity: 1 }}
-                          transition={{ delay: 0.5 + index * 0.1 }}
-                        >
-                          →
-                        </motion.span>
-                      )}
-                    </React.Fragment>
-                  ))}
-                </AnimatePresence>
+                    )}
+                  </React.Fragment>
+                ))}
               </div>
             </motion.div>
           )}
