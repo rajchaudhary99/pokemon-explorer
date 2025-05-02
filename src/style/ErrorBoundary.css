@@ -1,0 +1,67 @@
+.error-boundary {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #f8f8f8;
+    padding: 2rem;
+  }
+  
+  .error-boundary-content {
+    background-color: white;
+    border-radius: 12px;
+    padding: 2rem;
+    max-width: 600px;
+    width: 100%;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    text-align: center;
+  }
+  
+  .error-boundary h2 {
+    color: #e74c3c;
+    margin-bottom: 1rem;
+  }
+  
+  .error-boundary p {
+    color: #7f8c8d;
+    margin-bottom: 1.5rem;
+  }
+  
+  .error-boundary details {
+    background-color: #f5f5f5;
+    padding: 1rem;
+    border-radius: 6px;
+    margin-bottom: 1.5rem;
+    text-align: left;
+    font-family: monospace;
+    color: #c0392b;
+  }
+  
+  .error-retry-button {
+    background-color: #3498db;
+    color: white;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 50px;
+    cursor: pointer;
+    font-weight: 600;
+    margin-right: 1rem;
+    transition: all 0.2s ease;
+  }
+  
+  .error-home-button {
+    background-color: #2ecc71;
+    color: white;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 50px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.2s ease;
+  }
+  
+  .error-retry-button:hover, 
+  .error-home-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }

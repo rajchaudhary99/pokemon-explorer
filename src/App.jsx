@@ -7,14 +7,14 @@ import SearchBar from './components/SearchBar';
 import TypeFilter from './components/TypeFilter';
 import Loading from './components/Loading';
 import Pagination from './components/Pagination';
-import CompareModal from './components/CompareModal';
+import ErrorBoundary from './components/ErrorBoundary'
 import './App.css';
 
 // Cache for Pokémon details
 const pokemonCache = new Map();
 const CACHE_EXPIRATION_MS = 60 * 60 * 1000; // 1 hour
 
-const PokemonListPage = ({ favorites, onToggleFavorite, onCompare }) => {
+const PokemonListPage = ({ favorites, onToggleFavorite }) => {
   const [pokemon, setPokemon] = useState([]);
   const [filteredPokemon, setFilteredPokemon] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -116,7 +116,6 @@ const PokemonListPage = ({ favorites, onToggleFavorite, onCompare }) => {
                       pokemon={p} 
                       isFavorite={favorites.some(fav => fav.id === p.id)}
                       onToggleFavorite={onToggleFavorite}
-                      onCompare={onCompare}
                     />
                   </motion.div>
                 ))}
@@ -315,7 +314,7 @@ const PokemonDetailPage = ({ favorites, onToggleFavorite }) => {
                   whileHover={{ scale: 1.05 }}
                 >
                   {ability.ability.name.replace('-', ' ')}
-                  {ability.is_hidden && <span className="hidden-label">hidden</span>}
+                  {ability.is_hidden}
                 </motion.span>
               ))}
             </div>
@@ -443,10 +442,6 @@ const FavoritePokemons = ({ favorites, onToggleFavorite }) => {
 function App() {
   const [showFavorites, setShowFavorites] = useState(false);
   const [favorites, setFavorites] = useState([]);
-  const [showCompareModal, setShowCompareModal] = useState(false);
-  const [pokemonToCompare, setPokemonToCompare] = useState(null);
-  const [randomPokemon, setRandomPokemon] = useState(null);
-  const [pokemonList, setPokemonList] = useState([]);
   const [isScrolled, setIsScrolled] = useState(false);
 
   useEffect(() => {
@@ -462,12 +457,6 @@ function App() {
     if (storedFavorites) {
       setFavorites(JSON.parse(storedFavorites));
     }
-
-    const loadPokemon = async () => {
-      const data = await fetchAllPokemonDetails();
-      setPokemonList(data);
-    };
-    loadPokemon();
   }, []);
 
   const handleToggleFavorite = useCallback((pokemonData) => {
@@ -486,16 +475,6 @@ function App() {
     setFavorites(updatedFavorites);
     localStorage.setItem('favoritePokemons', JSON.stringify(updatedFavorites));
   }, [favorites]);
-
-  const handleCompare = useCallback((selectedPokemon) => {
-    setPokemonToCompare(selectedPokemon);
-    const otherPokemon = pokemonList.filter(p => p.id !== selectedPokemon.id);
-    if (otherPokemon.length > 0) {
-      const randomIndex = Math.floor(Math.random() * otherPokemon.length);
-      setRandomPokemon(otherPokemon[randomIndex]);
-      setShowCompareModal(true);
-    }
-  }, [pokemonList]);
 
   const scrollToTop = useCallback(() => {
     window.scrollTo({
@@ -542,6 +521,7 @@ function App() {
         </header>
 
         <div className="main-content-wrapper">
+        <ErrorBoundary>
           <Routes>
             <Route 
               path="/" 
@@ -555,7 +535,6 @@ function App() {
                   <PokemonListPage 
                     favorites={favorites}
                     onToggleFavorite={handleToggleFavorite}
-                    onCompare={handleCompare}
                   />
                 )
               } 
@@ -570,15 +549,8 @@ function App() {
               } 
             />
           </Routes>
+         </ErrorBoundary>
         </div>
-
-        {showCompareModal && (
-          <CompareModal 
-            pokemon1={pokemonToCompare}
-            pokemon2={randomPokemon}
-            onClose={() => setShowCompareModal(false)}
-          />
-        )}
 
         {isScrolled && (
           <motion.button 
